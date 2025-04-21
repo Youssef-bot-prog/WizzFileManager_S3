@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Dashboard - WIZZ</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="dashboard-bg">
+    <div class="dashboard-container">
+        <h2>Welcome {{ username }}</h2>
+        <p>📈 Uploads: {{ stats[0] }} | 📥 Downloads: {{ stats[1] }}</p>
+
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" required>
+            <button type="submit">Upload File</button>
+        </form>
+
+        <h3>📁 Your Files</h3>
+        <ul>
+            {% for file in files %}
+                <li>{{ file }} - <a href="{{ url_for('download', filename=file) }}">Download</a></li>
+            {% endfor %}
+        </ul>
+
+        <a href="/logout" class="logout-btn">Logout</a>
+    </div>
+</body>
+</html>
