@@ -70,7 +70,16 @@ def dashboard():
         else:
             users = []
 
-    files = []  # لو عايز تجيب لستة الملفات من S3 ممكن نعملها لاحقًا
+    
+    # عرض ملفات S3
+    files = []
+    try:
+        response = s3_client.list_objects_v2(Bucket=S3_BUCKET)
+        for obj in response.get('Contents', []):
+            files.append(obj['Key'])
+    except Exception as e:
+        print(f"Error fetching S3 files: {e}")
+    
     return render_template('admin.html' if is_admin else 'user.html', username=username, stats=stats, users=users, files=files)
 
 @app.route('/upload', methods=['POST'])

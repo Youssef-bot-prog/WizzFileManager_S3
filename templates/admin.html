@@ -36,3 +36,10 @@
     </div>
 </body>
 </html>
+
+<h3>Available Files for Download</h3>
+<ul>
+  {% for file in files %}
+    <li>{{ file }} - <a href="{{ url_for('download', filename=file) }}">Download</a></li>
+  {% endfor %}
+</ul>
